@@ -134,8 +134,8 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-          <a class="navbar-brand" href="{{ url('/') }}">
-              {{ config('app.name', 'Laravel') }}
+          <a class="navbar-brand" href="{{ route('bookings.index') }}">
+              {{ config('app.name', 'HOtelHatti Reservation System') }}
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -154,6 +154,9 @@
                         </li>
                     @endif
                 @else
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ route('bookings.index') }}">{{ __('See Bookings') }}</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}"
                             onclick="event.preventDefault();

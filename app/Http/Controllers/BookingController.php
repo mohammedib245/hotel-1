@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +33,11 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        $users = DB::table('users')->get()->pluck('name', 'id');
+        $rooms = DB::table('rooms')->get()->pluck('number', 'id');
+        return view('bookings.create')
+            ->with('users', $users)
+            ->with('rooms', $rooms);
     }
 
     /**
@@ -50,7 +59,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+        return view('bookings.show', ['booking' => $booking]);
     }
 
     /**
@@ -61,7 +70,14 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        //
+        $users = DB::table('users')->get()->pluck('name', 'id')->prepend('none');
+        $rooms = DB::table('rooms')->get()->pluck('number', 'id');
+        $bookingsUser = DB::table('bookings_users')->where('booking_id', $booking->id)->first();
+        return view('bookings.edit')
+            ->with('bookingsUser', $bookingsUser)
+            ->with('users', $users)
+            ->with('rooms', $rooms)
+            ->with('booking', $booking);
     }
 
     /**

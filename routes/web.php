@@ -9,29 +9,18 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
-  return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/test', function () {
-  return 'Bye bye!';
+    return 'Bye bye!';
 });
 Route::get('/rooms', 'ShowRoomsController');
 
 Route::resource('bookings', 'BookingController');
-// Route::get('/bookings', 'BookingController@index');
-// Route::get('/bookings/create', 'BookingController@create');
-// Route::post('/bookings', 'BookingController@store');
-// Route::get('/bookings/{booking}', 'BookingController@show');
-// Route::get('/bookings/{booking}/edit', 'BookingController@edit');
-// Route::put('/bookings/{booking}', 'BookingController@update');
-// Route::delete('/bookings/{booking}', 'BookingController@destroy');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
