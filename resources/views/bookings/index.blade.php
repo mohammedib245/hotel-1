@@ -35,6 +35,12 @@
           <td class="actions">
             <a href="{{ action('BookingController@show', ['booking' => $booking->id]) }}" alt="View" title="View">View</a>
             <a href="{{ action('BookingController@edit', ['booking' => $booking->id]) }}" alt="Edit" title="Edit">Edit</a>
+            <form action="{{ action('BookingController@destroy', ['booking' => $booking->id]) }}" method="post">
+              @method('DELETE')
+              @csrf
+              <button type="submit" class="btn btn-link" title="Delete" value="DELETE">Delete</button>
+            </form>
+
           </td>
         </tr>
       @empty

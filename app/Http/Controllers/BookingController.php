@@ -35,9 +35,12 @@ class BookingController extends Controller
     {
         $users = DB::table('users')->get()->pluck('name', 'id');
         $rooms = DB::table('rooms')->get()->pluck('number', 'id');
+        $booking = DB::table('bookings')->first();
+
         return view('bookings.create')
             ->with('users', $users)
-            ->with('rooms', $rooms);
+            ->with('rooms', $rooms)
+            ->with('booking', $booking);
     }
 
     /**
@@ -48,7 +51,20 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $id = DB::table('bookings')->insertGetId([
+            'room_id' => $request->input('room_id'),
+            'start' => $request->input('start'),
+            'end' => $request->input('end'),
+            'is_reservation' => $request->input('is_reservation', false),
+            'is_paid' => $request->input('is_paid', false),
+            'notes' => $request->input('notes'),
+        ]);
+        DB::table('bookings_users')->insert([
+            'booking_id' => $id,
+            'user_id' => $request->input('user_id'),
+        ]);
+        return redirect()->action('BookingController@index');
     }
 
     /**
@@ -89,7 +105,23 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+
+        DB::table('bookings')
+            ->where('id', $booking->id)
+            ->update([
+                'room_id' => $request->input('room_id'),
+                'start' => $request->input('start'),
+                'end' => $request->input('end'),
+                'is_reservation' => $request->input('is_reservation', false),
+                'is_paid' => $request->input('is_paid', false),
+                'notes' => $request->input('notes'),
+            ]);
+        DB::table('bookings_users')
+            ->where('booking_id', $booking->id)
+            ->update([
+                'user_id' => $request->input('user_id'),
+            ]);
+        return redirect()->action('BookingController@index');
     }
 
     /**
@@ -100,6 +132,8 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        DB::table('bookings_users')->where('booking_id', $booking->id)->delete();
+        DB::table('bookings')->where('id', $booking->id)->delete();
+        return redirect()->action('BookingController@index');
     }
 }

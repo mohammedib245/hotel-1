@@ -3,7 +3,7 @@
   <div class="col-sm-10">
       <select name="room_id" class="form-control" id="room_id" required>
           @foreach($rooms as $id => $display)
-              <option value="{{ $id }}" {{ (isset($booking->room_id) && $id === $booking->room_id) ? 'selected' : '' }}>{{ $display }}</option>
+              <option value="{{ $id }}" {{ isset($booking->room_id) && $id === $booking->room_id ? 'selected' : '' }}>{{ $display }}</option>
           @endforeach
       </select>
       <small class="form-text text-muted">The room number being booked.</small>
@@ -15,7 +15,7 @@
   <div class="col-sm-10">
       <select name="user_id" class="form-control" id="user_id" required>
           @foreach($users as $id => $display)
-              <option value="{{ $id }}" {{ (isset($bookingsUser->user_id) && $id === $bookingsUser->user_id) ? 'selected' : '' }}>{{ $display }}</option>
+              <option value="{{ $id }}" {{ isset($bookingsUser->user_id) && $id === $bookingsUser->user_id ? 'selected' : '' }}>{{ $display }}</option>
           @endforeach
       </select>
       <small class="form-text text-muted">The user booking the room.</small>
