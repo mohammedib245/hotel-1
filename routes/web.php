@@ -18,9 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/test', function () {
-    return 'Bye bye!';
-});
+
 Route::get('/rooms', 'ShowRoomsController');
+Route::get('/see', 'ShowRoomsController');
 
 Route::resource('bookings', 'BookingController');
