@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/rooms', 'ShowRoomsController');
-Route::get('/see', 'ShowRoomsController');
+// Route::get('/rooms', 'ShowRoomsController');
+Route::get('/rooms/{roomType?}', 'ShowRoomsController');
 
 Route::resource('bookings', 'BookingController');
