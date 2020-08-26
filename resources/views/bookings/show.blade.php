@@ -30,10 +30,13 @@
     <dd class="col-sm-9">{{ date('F d, Y', strtotime($booking->updated_at)) }}</dd>
 </dl>
 
-@foreach ($booking->users as $user)
-
+<div class="col pl-0">
+  @foreach ($booking->users as $user)
     <p>{{ $user->name }}</p>
-@endforeach
+  @endforeach
 
-<a href="{{ route('bookings.index') }}" class="btn btn-outline-info ">Go Back</a>
+  <a href="{{ route('bookings.index') }}" class="btn btn-outline-info ">Go Back</a>
+</div>
+
+
 @endsection

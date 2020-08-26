@@ -2,6 +2,8 @@
 
 use App\Booking;
 use App\User;
+use BookingsUsersSeeder;
+use HotelSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,8 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-        //$this->call(HotelSeeder::class);
+        $this->call(BookingsUsersSeeder::class);
+        $this->call(HotelSeeder::class);
         factory(User::class, 3)->create();
         factory(Booking::class, 10)->create();
     }

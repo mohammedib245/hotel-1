@@ -22,7 +22,7 @@ class BookingController extends Controller
     public function index()
     {
 
-        $bookings = Booking::paginate(10);
+        $bookings = Booking::with('room')->paginate(10);
         return view('bookings.index')
             ->with('bookings', $bookings);
     }
