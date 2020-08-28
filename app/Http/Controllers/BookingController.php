@@ -22,7 +22,8 @@ class BookingController extends Controller
     public function index()
     {
 
-        $bookings = Booking::with('room')->paginate(10);
+        $bookings = Booking::with(['room.roomType', 'users:name'])->paginate(10); // we can access room's roomType relation and get it like that, also we can get a relation field by : like that(e.g user's name)
+
         return view('bookings.index')
             ->with('bookings', $bookings);
     }
@@ -54,10 +55,8 @@ class BookingController extends Controller
 
         $booking = Booking::create($request->input());
 
-        DB::table('bookings_users')->insert([
-            'booking_id' => $booking->id,
-            'user_id' => $request->input('user_id'),
-        ]);
+        $booking->users()->attach($request->input('user_id')); // create a many relation with attach
+        // $user = $booking->users()->create(['name' => 'test', 'email' => 'wasg@gmail.com', 'password' => '7d,4BqTz5xW']); // we can create a user via a relation like that, but don't do that, password doesn't hash.
         return redirect()->action('BookingController@index');
     }
 
@@ -101,12 +100,8 @@ class BookingController extends Controller
     {
         $booking->fill($request->input());
         $booking->save();
+        $booking->users()->sync([$request->input('user_id')]); // update the records for the relationships between bookings and users to create any relationship that needed and delete any that do not match.
 
-        DB::table('bookings_users')
-            ->where('booking_id', $booking->id)
-            ->update([
-                'user_id' => $request->input('user_id'),
-            ]);
         return redirect()->action('BookingController@index');
     }
 
@@ -118,7 +113,7 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        DB::table('bookings_users')->where('booking_id', $booking->id)->delete();
+        $booking->users()->detach();
         $booking->delete();
         return redirect()->action('BookingController@index');
     }

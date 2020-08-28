@@ -23,3 +23,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/rooms/{roomType?}', 'ShowRoomsController');
 
 Route::resource('bookings', 'BookingController');
+Route::resource('room_types', 'RoomTypeController');
