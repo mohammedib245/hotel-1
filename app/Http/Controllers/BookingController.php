@@ -98,9 +98,18 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        $booking->fill($request->input());
+        $validatedData = $request->validate([
+            'start' => 'required|date',
+            'end' => 'required|date',
+            'room_id' => 'required|exists:rooms,id',
+            'user_id' => 'required|exists:users,id',
+            'is_paid' => 'nullable', //checkbox field must be nullable
+            'notes' => 'present', // permit empty or null
+            'is_reservation' => 'required',
+        ]);
+        $booking->fill($validatedData);
         $booking->save();
-        $booking->users()->sync([$request->input('user_id')]); // update the records for the relationships between bookings and users to create any relationship that needed and delete any that do not match.
+        $booking->users()->sync([$validatedData['user_id']]); // update the records for the relationships between bookings and users to create any relationship that needed and delete any that do not match.
 
         return redirect()->action('BookingController@index');
     }
