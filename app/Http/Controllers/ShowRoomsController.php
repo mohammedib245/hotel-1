@@ -15,7 +15,7 @@ class ShowRoomsController extends Controller
      */
     public function __invoke(Request $request, $roomType = null)
     {
-        $rooms = Room::byType($roomType)->get();
+        $rooms = Room::byType($roomType)->get(); //uses scope defined in room model scopeByType method
 
         return view('rooms.index', ['rooms' => $rooms]);
         //return response()->json($rooms);
