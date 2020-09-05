@@ -13,7 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        /* register the notifications class that don't depend on other classes*/
+        $this->app->bind('App\Libraries\Notifications', function ($app) {
+
+            return new \App\Libraries\Notifications();
+        });
     }
 
     /**
@@ -21,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    /* register a class that depends on other classes*/
     public function boot()
     {
         //

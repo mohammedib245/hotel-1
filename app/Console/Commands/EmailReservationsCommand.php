@@ -54,7 +54,7 @@ class EmailReservationsCommand extends Command
             if ($this->option('dry-run')) { //if dry run passed evaluates to true
                 $this->info('Would process booking');
             } else {
-                $this->error('Nothing happened');
+                $this->notify->send();
             }
 
             $bar->advance();
