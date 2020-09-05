@@ -1,8 +1,15 @@
 <?php
 namespace App\Libraries;
 
-class Notifications
+use App\Libraries\NotificationsInterface;
+
+class Notifications implements NotificationsInterface
 {
+    /**
+     * Send notifications
+     *
+     * @return void
+     */
     public function send()
     {
         var_dump('notify');
