@@ -15,6 +15,8 @@ class AppServiceProvider extends ServiceProvider
     {
         /* register the notifications class that don't depend on other classes*/
 
+        /* We don't need to register a binding here, laravel can do it automatically! Just need to inject it in constructor */
+
         // $this->app->bind('App\Libraries\Notifications', function ($app) {
 
         //     return new \App\Libraries\Notifications();
