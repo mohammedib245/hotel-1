@@ -4,10 +4,13 @@ namespace Tests\Feature;
 
 //use Illuminate\Foundation\Testing\RefreshDatabase;
 //use Illuminate\Foundation\Testing\WithFaker;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ShowRoomsControllerTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *
@@ -21,5 +24,20 @@ class ShowRoomsControllerTest extends TestCase
             ->assertSeeText('Type')
             ->assertViewIs('rooms.index')
             ->assertViewHas('rooms');
+    }
+
+    public function testRoomParameter()
+    {
+        $roomTypes = factory('App\RoomType', 3)->create();
+        $rooms = factory('App\Room', 20)->create();
+        $roomType = $roomTypes->random();
+
+        $response = $this->get('/rooms/' . $roomType->id);
+
+        $response->assertStatus(200)
+            ->assertSeeText('Type')
+            ->assertViewIs('rooms.index')
+            ->assertViewHas('rooms')
+            ->assertSeeText($roomType->name);
     }
 }
