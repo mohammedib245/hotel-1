@@ -53,16 +53,21 @@ class EmailReservationsCommand extends Command
         $bar = $this->output->createProgressBar($bookings->count());
         $bar->start();
         foreach ($bookings as $booking) {
-            if ($this->option('dry-run')) { //if dry run passed evaluates to true
-                $this->info('Would process booking');
-            } else {
-                $this->notify->send();
-                //Notifications::send();
-            }
+            $this->processBooking();
 
             $bar->advance();
         }
         $bar->finish();
         $this->comment('Command completed');
+    }
+
+    public function processBooking()
+    {
+        if ($this->option('dry-run')) { //if dry run passed evaluates to true
+            $this->info('Would process booking');
+        } else {
+            $this->notify->send();
+            //Notifications::send();
+        }
     }
 }
