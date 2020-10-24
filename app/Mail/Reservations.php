@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -16,9 +15,9 @@ class Reservations extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $name = '')
     {
-        //
+        $this->name = $name;
     }
 
     /**
@@ -28,6 +27,9 @@ class Reservations extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.reservation');
+        return $this->markdown('emails.reservation')
+            ->with([
+                'name' => $this->name,
+            ]);
     }
 }
