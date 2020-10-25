@@ -6,10 +6,11 @@ use App\Room;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Booking extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
 
     protected $fillable = [
         'room_id', 'start', 'end', 'is_reservation', 'is_paid', 'notes',
