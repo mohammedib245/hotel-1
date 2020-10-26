@@ -1,8 +1,9 @@
 @component('mail::message')
-# Introduction
 
-Reservation for {{ $name }} at {{ config('app.name') }}
+Reservation for <strong>{{ $name }} </strong> at <em><strong>{{ config('app.name') }}</strong></em>
 
-Thanks,<br>
-{{ config('app.name') }}
+You're receving this email because of a booking in our system to your name.
+
+We wish happy hours to you in our hotel,<br>
+<strong>{{ config('app.name') }}</strong>
 @endcomponent
