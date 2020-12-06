@@ -24,8 +24,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('inspire')
+            ->hourly();
+        $schedule->command('env')
+            ->everyMinute()
+            ->environments(['local'])
+            ->runInBackground()
+            ->appendOutputTo('C:\laragon\www\hotel\storage\logs\env.log')
+            ->after(function () {return true;});
     }
 
     /**
@@ -35,7 +41,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
